@@ -19,7 +19,7 @@ INSERT INTO lost_thing (LOST_THING_CODE, LOST_THING_CATEGORY, LOST_THING_DESCRIP
 SELECT lost_thing_description
 FROM lost_thing;
 
-SELECT * FROM lost_thing;
+SELECT * FROM recovery;
 
 INSERT INTO lost_thing (LOST_THING_CODE, LOST_THING_CATEGORY, LOST_THING_DESCRIPTION)
   SELECT 'newcod', LOST_THING_CATEGORY, LOST_THING_DESCRIPTION
@@ -42,3 +42,17 @@ WHERE myTab.location_description = 'under my bed';
 
 SELECT some_count
          FROM (SELECT COUNT(DISTINCT lost_thing_description) AS some_count FROM lost_thing);
+         
+CREATE OR REPLACE VIEW locationView
+AS
+SELECT *
+FROM recovery;
+
+SELECT view_name FROM user_views;
+
+DELETE codes;
+
+INSERT INTO recovery VALUES('sight', 'undabd');
+SELECT * FROM locationView;
+
+DROP VIEW codes;
