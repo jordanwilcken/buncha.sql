@@ -56,3 +56,21 @@ INSERT INTO recovery VALUES('sight', 'undabd');
 SELECT * FROM locationView;
 
 DROP VIEW codes;
+
+CREATE SEQUENCE seq_precious_id;
+
+CREATE TABLE seq_toy (
+  the_id int,
+  CONSTRAINT pk_id PRIMARY KEY (the_id)
+);
+
+INSERT INTO seq_toy VALUES(seq_id_seq.NEXTVAL);
+SELECT * FROM seq_toy;
+
+SELECT * FROM dba_views;
+
+DROP SEQUENCE seq_id_seq;
+
+SELECT table_name FROM dba_tables ORDER BY table_name DESC;
+
+DROP TABLE lost_thing;
