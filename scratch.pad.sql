@@ -65,12 +65,21 @@ CREATE TABLE seq_toy (
 );
 
 INSERT INTO seq_toy VALUES(seq_id_seq.NEXTVAL);
-SELECT * FROM seq_toy;
+SELECT * FROM story_event;
 
-SELECT * FROM dba_views;
+SELECT * FROM precious;
 
 DROP SEQUENCE seq_id_seq;
 
 SELECT table_name FROM dba_tables ORDER BY table_name DESC;
 
 DROP TABLE lost_thing;
+
+ALTER TABLE event ADD CONSTRAINT pk_event_id PRIMARY KEY (event_id);
+
+SELECT event_description FROM event
+INNER JOIN loss_story_event ON event.EVENT_ID = loss_story_event.event_id
+INNER JOIN loss_story ON loss_story_event.LOSS_STORY_ID = loss_story.LOSS_STORY_ID
+INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID AND precious.PRECIOUS_ID = 1; 
+
+RENAME story_event TO loss_story_event;

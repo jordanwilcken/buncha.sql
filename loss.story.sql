@@ -8,4 +8,6 @@ CREATE Table loss_story (
 CREATE SEQUENCE seq_loss_story_id;
 
 INSERT INTO loss_story (loss_story_id, precious_id)
-  SELECT seq_loss_story_id.NEXTVAL, precious_id FROM precious WHERE ROWNUM = '1';
+  SELECT seq_loss_story_id.NEXTVAL, precious_id FROM precious WHERE precious.PRECIOUS_IS_LOST = '1';
+  
+  SELECT * FROM loss_story;
