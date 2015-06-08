@@ -34,6 +34,12 @@ WHERE LOST_THING_CODE = 'keys';
 
 INSERT INTO recovery (LOST_THING_CODE, LOCATION_CODE) VALUES('frgwlt', 'undabd');
 
+/***** LOCATION *****/
+INSERT INTO LOCATION (location_code, location_description) VALUES (
+  'npoldr', 'Napoleon Dynamit''es front doorstep'
+);
+/***** LOCATION *****/
+
 SELECT location_code
 FROM
   ( SELECT location_code, location_description
@@ -77,9 +83,38 @@ DROP TABLE lost_thing;
 
 ALTER TABLE event ADD CONSTRAINT pk_event_id PRIMARY KEY (event_id);
 
+/*All event descriptions for stories of losing previous with id 1
+*/
 SELECT event_description FROM event
 INNER JOIN loss_story_event ON event.EVENT_ID = loss_story_event.event_id
 INNER JOIN loss_story ON loss_story_event.LOSS_STORY_ID = loss_story.LOSS_STORY_ID
-INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID AND precious.PRECIOUS_ID = 1; 
+INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID AND precious.PRECIOUS_ID = 1;
+
+SELECT * FROM loss_story;
 
 RENAME story_event TO loss_story_event;
+SELECT * FROM loss_story_event;
+DELETE loss_story_event;
+
+/***** EVENT *****/
+DROP TABLE event;
+
+SELECT COUNT(event_id) FROM event;
+/***** EVENT *****/
+
+CREATE TABLE dum_table (
+  the_id INT NOT NULL);
+  
+  ALTER TABLE dum_table ADD CONSTRAINT constr_pk PRIMARY KEY (the_id);
+  INSERT INTO dum_table (the_id) VALUES(23);
+  
+  CREATE TABLE refers_to_dum (
+  dum_id INT NOT NULL,
+  CONSTRAINT dum_contstraint FOREIGN KEY (dum_id) REFERENCES dum_table (the_id) ON DELETE CASCADE
+  );
+  ALTER TABLE refers_to_dum ADD other_varchar VARCHAR(100);
+  
+  INSERT INTO refers_to_dum (dum_id, some_varchar, other_varchar) VALUES(23, 'I am some', 'and I am other');
+  
+  DELETE dum_table;
+  SELECT * FROM refers_to_dum;
