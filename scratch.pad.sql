@@ -88,7 +88,27 @@ ALTER TABLE event ADD CONSTRAINT pk_event_id PRIMARY KEY (event_id);
 SELECT event_description FROM event
 INNER JOIN loss_story_event ON event.EVENT_ID = loss_story_event.event_id
 INNER JOIN loss_story ON loss_story_event.LOSS_STORY_ID = loss_story.LOSS_STORY_ID
-INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID AND precious.PRECIOUS_ID = 1;
+INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID AND precious.PRECIOUS_ID = 1
+GROUP BY event_description;
+
+/***** Between what two events did I lose my currently lost antique cans? *****/
+SELECT precious_id, precious_description FROM precious
+WHERE PRECIOUS_DESCRIPTION LIKE 'antique cans';
+
+SELECT event_description AS before_event
+FROM event
+INNER JOIN loss_story_event ON event.EVENT_ID = loss_story_event.LOSS_STORY_ID
+INNER JOIN loss_story ON LOSS_STORY_EVENT.LOSS_STORY_ID = loss_story.LOSS_STORY_ID
+INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID
+WHERE precious.precious_description LIKE '%cans%'
+ORDER BY EVENT_TIMESTAMP DESC;
+
+             
+             SELECT event_description FROM event WHERE event_is_precious_lost = '1' AND ROWNUM = '1' ORDER BY event_timestamp DESC
+             the last chronological event in story where we had the precious and the event right after it
+             INNER JOIN precious ON loss_story.precious_id = precious.precious_id
+             WHERE precious.precious_description LIKE '%cans%';
+/***** Between what two events did I lose my currently lost antique cans? *****/
 
 SELECT * FROM loss_story;
 

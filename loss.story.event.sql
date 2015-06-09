@@ -6,6 +6,6 @@ CREATE Table loss_story_event (
   CONSTRAINT pk_loss_story_event_id PRIMARY KEY (loss_story_id, event_id)
 );
 
-INSERT INTO loss_story_event (loss_story_id, event_id, location_code)
+INSERT INTO loss_story_event (loss_story_id, event_id)
   SELECT loss_story.loss_story_id, event.event_id
   FROM loss_story, event;
