@@ -102,8 +102,8 @@ WHERE (
   FROM (
     SELECT event_timestamp
     FROM event
-    INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID
-    WHERE event.event_precious_accounted_for = '1' AND loss_story_event.loss_story_id = loss_story_id
+    INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID AND loss_story_event.loss_story_id = loss_story_id
+    WHERE event.event_precious_accounted_for = '1'
     ORDER BY event.event_timestamp DESC )
   WHERE ROWNUM = '1' )
 >
@@ -111,8 +111,8 @@ WHERE (
   SELECT event_timestamp AS last_unaccounted_for
   FROM (
     SELECT event_timestamp
-    FROM event INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID
-    WHERE event.event_precious_accounted_for = '0'  AND loss_story_event.loss_story_id = loss_story_id
+    FROM event INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID AND loss_story_event.loss_story_id = loss_story_id
+    WHERE event.event_precious_accounted_for = '0' 
     ORDER BY event.event_timestamp DESC )
   WHERE ROWNUM = '1' )
   );
