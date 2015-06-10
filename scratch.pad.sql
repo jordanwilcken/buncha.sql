@@ -91,23 +91,57 @@ INNER JOIN loss_story ON loss_story_event.LOSS_STORY_ID = loss_story.LOSS_STORY_
 INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID AND precious.PRECIOUS_ID = 1
 GROUP BY event_description;
 
-/***** Between what two events did I lose my currently lost antique cans? *****/
-SELECT precious_id, precious_description FROM precious
-WHERE PRECIOUS_DESCRIPTION LIKE 'antique cans';
-
-SELECT event_description AS before_event
-FROM event
-INNER JOIN loss_story_event ON event.EVENT_ID = loss_story_event.LOSS_STORY_ID
-INNER JOIN loss_story ON LOSS_STORY_EVENT.LOSS_STORY_ID = loss_story.LOSS_STORY_ID
-INNER JOIN precious ON loss_story.PRECIOUS_ID = precious.PRECIOUS_ID
-WHERE precious.precious_description LIKE '%cans%'
-ORDER BY EVENT_TIMESTAMP DESC;
+/***** Between what two events did I lose my currently lost antique cans? - I've not completed this one yet. *****/
 
              
-             SELECT event_description FROM event WHERE event_is_precious_lost = '1' AND ROWNUM = '1' ORDER BY event_timestamp DESC
-             the last chronological event in story where we had the precious and the event right after it
-             INNER JOIN precious ON loss_story.precious_id = precious.precious_id
-             WHERE precious.precious_description LIKE '%cans%';
+/*** getting stories where the precious is stilll accounted for at the point of the last event - this doesn't work yet****/
+SELECT loss_story_id
+FROM loss_story
+WHERE ( 
+  (SELECT event_timestamp AS last_time_accounted_for
+  FROM (
+    SELECT event_timestamp
+    FROM event
+    INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID
+    WHERE event.event_precious_accounted_for = '1' AND loss_story_event.loss_story_id = loss_story_id
+    ORDER BY event.event_timestamp DESC )
+  WHERE ROWNUM = '1' )
+>
+  (
+  SELECT event_timestamp AS last_unaccounted_for
+  FROM (
+    SELECT event_timestamp
+    FROM event INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID
+    WHERE event.event_precious_accounted_for = '0'  AND loss_story_event.loss_story_id = loss_story_id
+    ORDER BY event.event_timestamp DESC )
+  WHERE ROWNUM = '1' )
+  );
+  
+  SELECT * FROM event
+  INNER JOIN loss_story_event ON event.EVENT_ID = loss_story_event.EVENT_ID AND loss_story_event.LOSS_STORY_ID = '1'
+  ORDER BY event_timestamp ASC;
+  
+  SELECT event_timestamp AS last_time_accounted_for
+  FROM (
+    SELECT event_timestamp
+    FROM event
+    INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID AND loss_story_event.LOSS_STORY_ID = '1'
+    WHERE event.event_precious_accounted_for = '1'
+    ORDER BY event.event_timestamp DESC )
+  WHERE ROWNUM = '1';
+  
+   SELECT event_timestamp AS last_unaccounted_for
+  FROM (
+    SELECT event_timestamp
+    FROM event INNER JOIN LOSS_STORY_EVENT ON event.event_id = loss_story_event.EVENT_ID AND loss_story_event.LOSS_STORY_ID = '1'
+    WHERE event.event_precious_accounted_for = '0'
+    ORDER BY event.event_timestamp DESC )
+  WHERE ROWNUM = '1' ;
+  
+SELECT loss_story_id
+FROM loss_story
+WHERE (to_timestamp('2015-06-02', 'YYYY-MM-DD') > to_timestamp('2015-06-01', 'YYYY-MM-DD'));
+  
 /***** Between what two events did I lose my currently lost antique cans? *****/
 
 SELECT * FROM loss_story;

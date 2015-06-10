@@ -7,5 +7,4 @@ CREATE Table loss_story_event (
 );
 
 INSERT INTO loss_story_event (loss_story_id, event_id)
-  SELECT loss_story.loss_story_id, event.event_id
-  FROM loss_story, event;
+  VALUES (41, 81);
