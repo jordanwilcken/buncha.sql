@@ -11,3 +11,5 @@ INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUE
 INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUES(seq_precious_id.NEXTVAL, '1', 'Boots of Stomping');
 INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUES(seq_precious_id.NEXTVAL, '1', 'The pencil sharpener');
 INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUES(seq_precious_id.NEXTVAL, '1', 'mom''s keys');
+
+SELECT precious_id FROM precious;

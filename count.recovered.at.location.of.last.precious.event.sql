@@ -18,9 +18,18 @@ SELECT event_id, event_timestamp, precious_id, recovery_timestamp
 FROM (
   SELECT event.event_id, event.event_timestamp, recovery.precious_id, recovery.recovery_timestamp
   FROM event
-  INNER JOIN precious_event ON event.event_id = precious_event.event_id 
-  INNER JOIN recovery ON precious_event.precious_id = recovery.precious_id
+    INNER JOIN precious_event ON event.event_id = (
+      SELECT event_id_inner FROM (
+        SELECT e2.event_id FROM event e2
+          INNER JOIN precious_event p_e2 ON recovery.precious_id = p_e2.precious_id
+        WHERE e2.event_timestamp < recovery.recovery_timestamp
+        ORDER BY e2.event_timestamp DESC
+      )
+      WHERE ROWNUM = '1'
+      )
+    INNER JOIN recovery ON precious_event.precious_id = recovery.precious_id
   WHERE recovery.recovery_timestamp > event.event_timestamp
 );
 
 FROM precious_id IN (SELECT precious_id FROM recovery)
+
