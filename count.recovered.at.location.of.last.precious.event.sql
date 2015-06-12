@@ -33,3 +33,12 @@ FROM (
 
 FROM precious_id IN (SELECT precious_id FROM recovery)
 
+SELECT recovery_timestamp
+FROM recovery
+JOIN             (
+                 SELECT precious_event.precious_id, FIRST_VALUE(event.event_id) OVER (PARTITION BY precious_event.precious_id ORDER BY event_timestamp DESC) AS rowNumber
+                 FROM event
+                   INNER JOIN precious_event ON event.event_id = precious_event.event_id
+            ) e
+ON recovery.precious_id = e.precious_id AND e.event_timestamp < recovery_timestamp AND rowNumber = 1;
+
