@@ -15,3 +15,10 @@ INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUE
 SELECT * FROM precious;
 
 UPDATE precious SET precious_description = 'The Bat Bat' WHERE precious_id = 10;
+
+SELECT precious.precious_id, precious_description, event_timestamp
+FROM precious
+  INNER JOIN precious_event on precious.precious_id = precious_event.precious_id
+  INNER JOIN event ON precious_event.event_id = event.event_id
+  WHERE precious.precious_id = 7
+  ORDER BY precious_id ASC, event_timestamp;
