@@ -12,4 +12,6 @@ INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUE
 INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUES(seq_precious_id.NEXTVAL, '1', 'The pencil sharpener');
 INSERT INTO precious (precious_id, precious_is_lost, precious_description) VALUES(seq_precious_id.NEXTVAL, '1', 'mom''s keys');
 
-SELECT precious_id FROM precious;
+SELECT * FROM precious;
+
+UPDATE precious SET precious_description = 'The Bat Bat' WHERE precious_id = 10;

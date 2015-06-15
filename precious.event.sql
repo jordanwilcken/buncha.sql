@@ -10,3 +10,5 @@ INSERT INTO precious_event (precious_id, event_id)
   SELECT precious.precious_id, event.event_id
   FROM precious, event
   WHERE ROWNUM < 20;
+  
+  SELECT * FROM precious_event;
