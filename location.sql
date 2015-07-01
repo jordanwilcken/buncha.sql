@@ -10,5 +10,3 @@ INSERT INTO location (location_code, location_description) VALUES ( 'batcav', 'T
 INSERT INTO location (location_code, location_description) VALUES ( 'lndmat', 'the laundromat' );
 INSERT INTO location (location_code, location_description) VALUES ( 'lndma2', 'the laundromat' );
 INSERT INTO location (location_code, location_description) VALUES ( 'bdroad', 'hole in the rock road, Escalante' );
-
-SELECT location_code FROM location;

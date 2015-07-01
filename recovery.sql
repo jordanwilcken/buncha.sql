@@ -4,7 +4,7 @@ CREATE Table recovery (
   recovery_timestamp TIMESTAMP(0) NOT NULL,
   CONSTRAINT fk_precious_id FOREIGN KEY (precious_id) REFERENCES precious (precious_id),
   CONSTRAINT fk_location   FOREIGN KEY (location_code)   REFERENCES location (location_code),
-  CONSTRAINT pk_recovery   PRIMARY KEY (precious_id, location_code, recovery_timestamp)
+  CONSTRAINT pk_recovery   PRIMARY KEY (precious_id, recovery_timestamp)
 );
 
 INSERT INTO recovery (precious_id, location_code, recovery_timestamp)
@@ -17,9 +17,3 @@ INSERT INTO recovery (precious_id, location_code, recovery_timestamp)
   VALUES(9, 'npoldr', TIMESTAMP '2015-03-17 17:17:17');
 INSERT INTO recovery (precious_id, location_code, recovery_timestamp)
   VALUES(10, 'undabd', TIMESTAMP '2014-12-31 12:12:12');
-  
-  ALTER TABLE recovery ADD CONSTRAINT pk_recovery PRIMARY KEY (precious_id, location_code, recovery_timestamp);
-  
-  UPDATE recovery SET location_code = 'npoldr' WHERE precious_id = 10;
-  
-  SELECT * FROM recovery;
