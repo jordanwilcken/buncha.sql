@@ -24,6 +24,4 @@ FROM (
                                                                                AND precious_event.precious_id = 21
                                                                          )
                       ) first_lost_event ON first_lost_event.event_timestamp > last_precious_event.event_timestamp
-WHERE last_precious_event.row_num = 1;
-
-SELECT * FROM precious;
+WHERE last_precious_event.row_num = 1 AND first_lost_event.row_num = 1;
